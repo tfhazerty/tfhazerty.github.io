@@ -1,0 +1,115 @@
+:root {
+  --blue: #0072ce;
+  --white: #ffffff;
+  --black: #121212;
+  --grey: #1e1e1e;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--blue);
+  padding: 1rem;
+  color: var(--white);
+}
+
+.logo {
+  height: 50px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+#toggleTheme {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--white);
+}
+
+main {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+#chatContainer {
+  width: 100%;
+  max-width: 600px;
+}
+
+#chatBox {
+  background-color: var(--grey);
+  padding: 1rem;
+  border-radius: 10px;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 80%;
+}
+
+.user {
+  background-color: var(--blue);
+  color: var(--white);
+  align-self: flex-end;
+}
+
+.bot {
+  background-color: var(--white);
+  color: var(--black);
+  align-self: flex-start;
+}
+
+body.dark .bot {
+  background-color: #2e2e2e;
+  color: var(--white);
+}
+
+#questionInput {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--blue);
+  outline: none;
+}
+
+#suggestions {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.suggestion {
+  background-color: var(--blue);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
