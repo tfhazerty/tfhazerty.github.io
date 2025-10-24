@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub IA — Chat Simulation</title>
+<style>
+  :root {
+    --bg: #111;
+    --text: #fff;
+    --muted: #aaa;
+    --error: #ff4d4d;
+    --accent: #0ff;
+    font-family: 'Arial', sans-serif;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: radial-gradient(circle at center, #222, #111);
+    color: var(--text);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .logo {
+    margin-top: 10px;
+    width: 120px;
+    height: 120px;
+    filter: brightness(2) drop-shadow(0 0 25px rgba(255,255,255,0.5));
+  }
+
+  .menu {
+    margin-top: 10px;
+  }
+
+  select {
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.8);
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+  }
+
+  select option {
+    background: #222;
+    color: #fff;
+  }
+
+  .chat-container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .message {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 25px;
+    word-wrap: break-word;
+    background: rgba(255,255,255,0.05);
+    align-self: flex-start;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .message.user {
+    background: rgba(0,255,255,0.1);
+    align-self: flex-end;
+  }
+
+  .message.error {
+    color: var(--error);
+    background: rgba(255,0,0,0.1);
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top: 3px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .input-area {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+  }
+
+  button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15));
+  }
+
+  button img {
+    width: 24px;
+    height: 24px;
+  }
+</style>
+</head>
+<body>
+  <img src="https://pngimg.com/uploads/github/github_PNG40.png" alt="GitHub IA Logo" class="logo">
+  <div class="menu">
+    <select id="languageSelect">
+      <option value="Python">Python</option>
+      <option value="JavaScript">JavaScript</option>
+      <option value="Java">Java</option>
+      <option value="C++">C++</option>
+      <option value="C#">C#</option>
+      <option value="Go">Go</option>
+      <option value="Rust">Rust</option>
+      <option value="Ruby">Ruby</option>
+      <option value="PHP">PHP</option>
+      <option value="Swift">Swift</option>
+      <option value="Kotlin">Kotlin</option>
+      <option value="TypeScript">TypeScript</option>
+      <option value="Scala">Scala</option>
+      <option value="Haskell">Haskell</option>
+      <option value="Perl">Perl</option>
+      <option value="Lua">Lua</option>
+      <option value="R">R</option>
+      <option value="Dart">Dart</option>
+    </select>
+  </div>
+  <div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your message...">
+      <button id="sendBtn"><img src="https://cdn-icons-png.flaticon.com/512/60/60577.png" alt="Send"></button>
+    </div>
+  </div>
+
+<script>
+const messages = document.getElementById('messages');
+const input = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const languageSelect = document.getElementById('languageSelect');
+
+function typeWriter(text, element, index = 0) {
+  if(index < text.length){
+    element.textContent += text.charAt(index);
+    setTimeout(() => typeWriter(text, element, index + 1), 30);
+  }
+}
+
+function sendUserMessage(text) {
+  const userMsg = document.createElement('div');
+  userMsg.className = 'message user';
+  userMsg.textContent = text;
+  messages.appendChild(userMsg);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function sendAIMessage(text) {
+  const aiMsg = document.createElement('div');
+  aiMsg.className = 'message error';
+  const loader = document.createElement('div');
+  loader.className = 'loading';
+  aiMsg.appendChild(loader);
+  messages.appendChild(aiMsg);
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(()=>{
+    aiMsg.removeChild(loader);
+    typeWriter(text, aiMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 1500);
+}
+
+sendBtn.addEventListener('click', ()=>{
+  if(!input.value.trim()) return;
+  sendUserMessage(input.value);
+  sendAIMessage('Error 0xDEADBEEF: GitHub IA is not functional yet! 0xCAFEBABE');
+  input.value = '';
+});
+
+input.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') sendBtn.click();
+});
+
+languageSelect.addEventListener('change', ()=>{
+  const lang = languageSelect.value;
+  sendAIMessage(`GitHub IA is configured in mode ${lang}`);
+});
+</script>
+</body>
+</html>
