@@ -1,27 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chatbot Vanves</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GitHub IA — Accueil</title>
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --muted: #aaa;
+      --accent: #0ff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #0a0a0a, #000);
+      color: var(--text);
+      text-align: center;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 25px;
+      filter: brightness(2) drop-shadow(0 0 20px rgba(255,255,255,0.3));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: brightness(2.2) drop-shadow(0 0 35px rgba(255,255,255,0.5));
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 12px 0 35px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .btn-google {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-google:hover {
+      transform: scale(1.05);
+      background: #f1f1f1;
+    }
+
+    .btn-google img {
+      width: 22px;
+      height: 22px;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      p { font-size: 0.9rem; }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="vanves.png" alt="Logo Vanves" class="logo">
-    <h1>Chatbot Vanves</h1>
-    <button id="toggleTheme">🌙</button>
-  </header>
-
-  <main>
-    <div id="chatContainer">
-      <div id="chatBox"></div>
-      <div id="suggestions"></div>
-      <input type="text" id="questionInput" placeholder="Posez votre question..." autocomplete="off">
-    </div>
-  </main>
-
-  <script src="script.js"></script>
+  <img src="https://pngimg.com/d/github_PNG40.png" alt="GitHub IA Logo" class="logo">
+  <h1>GitHub IA</h1>
+  <p>L'IA pour développeurs — Génération de code illimitée</p>
+  <button class="btn-google">
+    <img src="https://crystalpng.com/wp-content/uploads/2025/05/google-logo.png" alt="Google Logo">
+    Se connecter avec Google
+  </button>
+  <footer>© 2025 GitHub IA — Tous droits réservés</footer>
 </body>
 </html>
-
